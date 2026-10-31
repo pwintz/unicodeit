@@ -1,6 +1,6 @@
 import sys
 
-from .data import REPLACEMENTS, COMBININGMARKS, SUBSUPERSCRIPTS
+from .data import REPLACEMENTS, COMBININGMARKS, SUBSUPERSCRIPTS, MATHCLASSES
 
 
 if __name__ == "__main__":
@@ -29,5 +29,12 @@ if __name__ == "__main__":
 
         f.write('export const subsuperscripts = [\n')
         for l, u in SUBSUPERSCRIPTS:
+            l = l.replace('\\', '\\\\')
+            l = l.replace('\'', '\\\'')
             f.write(f'   [\'{l}\', \'{u}\'],\n')
+        f.write('];\n')
+
+        f.write('\nexport const mathclasses: [string, number, number][] = [\n')
+        for cls, first, last in MATHCLASSES:
+            f.write(f'   [\'{cls}\', 0x{first:04X}, 0x{last:04X}],\n')
         f.write('];\n')

@@ -843,7 +843,7 @@ REPLACEMENTS = [
     ('\\mathsterling', '\xa3'),
     ('\\textcurrency', '\xa4'),
     ('\\triangledown', '\u25bf'),
-    ('\\blacklozenge', '\ue80b'),
+    ('\\blacklozenge', '\u29eb'),
     ('\\binampersand', '&'),
     ('\\oturnedcomma', '\u0312'),
     ('\\mathrm{\\Phi}', '\u03a6'),
@@ -1006,6 +1006,7 @@ REPLACEMENTS = [
     ('\\mbfsansthree', '\U0001d7ef'),
     ('\\mbfsansseven', '\U0001d7f3'),
     ('\\mbfsanseight', '\U0001d7f4'),
+    ('\\sfrac{1}{10}', '\u2152'),
     ('\\sfrac{5}{6}', '\u215a'),
     ('\\preccurlyeq', '\u227c'),
     ('\\Rrightarrow', '\u21db'),
@@ -1449,6 +1450,9 @@ REPLACEMENTS = [
     ('\\mathsfbf{8}', '\U0001d7f4'),
     ('\\mathsfbf{9}', '\U0001d7f5'),
     ('\\mbfsansnine', '\U0001d7f5'),
+    ('\\sfrac{1}{7}', '\u2150'),
+    ('\\sfrac{1}{9}', '\u2151'),
+    ('\\sfrac{0}{3}', '\u2189'),
     ('\\mathbb{Pi}', '\u213f'),
     ('\\mathcal{M}', '\u2133'),
     ('\\mathcal{o}', '\U00002134'),
@@ -1728,6 +1732,7 @@ REPLACEMENTS = [
     ('\\mbfsansone', '\U0001d7ed'),
     ('\\mbfsanstwo', '\U0001d7ee'),
     ('\\mbfsanssix', '\U0001d7f2'),
+    ('\\thickspace', '\u2002'),
     ('\\Leftarrow', '\u21d0'),
     ('\\gvertneqq', '\u2269'),
     ('\\mathbb{C}', '\u2102'),
@@ -2261,6 +2266,7 @@ REPLACEMENTS = [
     ('\\mathtt{7}', '\U0001d7fd'),
     ('\\mathtt{8}', '\U0001d7fe'),
     ('\\mathtt{9}', '\U0001d7ff'),
+    ('\\thinspace', '\u2009'),
     ('\\setminus', '\u2216'),
     ('\\succnsim', '\u22e9'),
     ('\\doteqdot', '\u2251'),
@@ -2917,6 +2923,7 @@ REPLACEMENTS = [
     ('\\mttfour', '\U0001d7fa'),
     ('\\mttfive', '\U0001d7fb'),
     ('\\mttnine', '\U0001d7ff'),
+    ('\\enspace', '\u2002'),
     ('\\supset', '\u2283'),
     ('\\hstrok', '\u0127'),
     ('\\Tstrok', '\u0166'),
@@ -2948,7 +2955,7 @@ REPLACEMENTS = [
     ('\\daleth', '\u2138'),
     ('\\square', '\u25a0'),
     ('\\nVDash', '\u22af'),
-    ('\\rangle', '\u3009'),
+    ('\\rangle', '\u27e9'),
     ('\\tstrok', '\u0167'),
     ('\\oslash', '\u2298'),
     ('\\ltimes', '\u22c9'),
@@ -2962,7 +2969,7 @@ REPLACEMENTS = [
     ('\\forall', '\u2200'),
     ('\\nVdash', '\u22ae'),
     ('\\Supset', '\u22d1'),
-    ('\\langle', '\u3008'),
+    ('\\langle', '\u27e8'),
     ('\\ominus', '\u2296'),
     ('\\rfloor', '\u230b'),
     ('\\circeq', '\u2257'),
@@ -3428,7 +3435,6 @@ REPLACEMENTS = [
     ('\\imath', '\u0131'),
     ('\\jmath', '\u0237'),
     ('\\ocirc', '\u030a'),
-    ('\\check', '\u030c'),
     ('\\upEta', '\u0397'),
     ('\\upRho', '\u03a1'),
     ('\\upTau', '\u03a4'),
@@ -3621,6 +3627,11 @@ REPLACEMENTS = [
     ('\\mitnu', '\U0001d708'),
     ('\\mitxi', '\U0001d709'),
     ('\\mitpi', '\U0001d70b'),
+    ('\\lvert', '\u007c'),
+    ('\\rvert', '\u007c'),
+    ('\\lVert', '\u2016'),
+    ('\\rVert', '\u2016'),
+    ('\\qquad', '\u2003\u2003'),
     ('\\boxr', '\u2514'),
     ('\\k{i}', '\u012f'),
     ('\\`{I}', '\xcc'),
@@ -4157,9 +4168,6 @@ REPLACEMENTS = [
     ('\\QED', '\u220e'),
     ('\\lor', '\u2228'),
     ('\\nis', '\u22fc'),
-    ('25\\%', '\u2591'),
-    ('50\\%', '\u2592'),
-    ('75\\%', '\u2593'),
     ('\\RHD', '\u25b6'),
     ('\\rhd', '\u25b7'),
     ('\\LHD', '\u25c0'),
@@ -4270,6 +4278,7 @@ COMBININGMARKS = [
     ('\\acute', '\u0301'),
     ('\\slash', '\u0338'),
     ('\\breve', '\u0306'),
+    ('\\check', '\u030C'),
     ('\\ddot', '\u0308'),
     ('\\dot', '\u0307'),
     ('\\bar', '\u0305'),
@@ -4344,6 +4353,10 @@ SUBSUPERSCRIPTS = [
     ('^-', '\u207B'),
     ('^\u2212', '\u207B'),  # minus
     ('^.', '\u1427'),
+    ('^\u22A4', '\u1D40'),  # \top as transpose
+    ('^\u22BA', '\u1D40'),  # \intercal as transpose
+    ("^'", '\u2032'),  # prime
+    ('^\u2032', '\u2032'),  # \prime is already raised
     ('^P', '\u1D3E'),
     ('^R', '\u1D3F'),
     ('^T', '\u1D40'),
@@ -4388,4 +4401,92 @@ SUBSUPERSCRIPTS = [
     ('^e', '\u1D49'),
     ('^f', '\u1DA0'),
     ('^g', '\u1D4D'),
+]
+
+# TeX math classes of output characters, as (class, first, last) code point
+# ranges, for spacing in math mode. Characters not listed are ordinary. "attach"
+# characters join the preceding atom, like the primes in f′.
+MATHCLASSES = [
+    ('rel', 0x003A, 0x003A),  # :
+    ('rel', 0x003C, 0x003E),  # < = >
+    ('rel', 0x2190, 0x21FF),  # arrows
+    ('rel', 0x2208, 0x220D),  # ∈ ∉ ∋ ...
+    ('rel', 0x221D, 0x221D),  # ∝
+    ('rel', 0x2223, 0x2226),  # ∣ ∤ ∥ ∦
+    ('rel', 0x2236, 0x2237),  # ∶ ∷
+    ('rel', 0x2239, 0x223F),  # ∼ ∽ ...
+    ('rel', 0x2241, 0x228B),  # ≃ ≅ ≈ ≠ ≡ ≤ ≥ ≪ ≺ ⊂ ⊆ ...
+    ('rel', 0x228F, 0x2292),  # ⊏ ⊐ ⊑ ⊒
+    ('rel', 0x22A2, 0x22A3),  # ⊢ ⊣
+    ('rel', 0x22A5, 0x22B8),  # ⊥ ⊧ ⊨ ⊲ ⊳ ...
+    ('rel', 0x22D0, 0x22D1),  # ⋐ ⋑
+    ('rel', 0x22D4, 0x22ED),  # ⋔ ⋘ ⋙ ⋚ ...
+    ('rel', 0x22F2, 0x22FF),  # ⋲ ... (element of variants)
+    ('rel', 0x27C2, 0x27C2),  # ⟂
+    ('rel', 0x27F0, 0x27FF),  # long arrows
+    ('rel', 0x2900, 0x297F),  # more arrows
+    ('rel', 0x2A66, 0x2AFA),  # ⩽ ⩾ ⪯ ⪰ ⫅ ⫆ ...
+    ('bin', 0x002A, 0x002B),  # * +
+    ('bin', 0x00B1, 0x00B1),  # ±
+    ('bin', 0x00B7, 0x00B7),  # ·
+    ('bin', 0x00D7, 0x00D7),  # ×
+    ('bin', 0x00F7, 0x00F7),  # ÷
+    ('bin', 0x2020, 0x2021),  # † ‡
+    ('bin', 0x2212, 0x2214),  # − ∓ ∔
+    ('bin', 0x2216, 0x2219),  # ∖ ∗ ∘ ∙
+    ('bin', 0x2227, 0x222A),  # ∧ ∨ ∩ ∪
+    ('bin', 0x2238, 0x2238),  # ∸
+    ('bin', 0x2240, 0x2240),  # ≀
+    ('bin', 0x228C, 0x228E),  # ⊌ ⊍ ⊎
+    ('bin', 0x2293, 0x22A1),  # ⊓ ⊔ ⊕ ⊖ ⊗ ⊘ ⊙ ...
+    ('bin', 0x22BA, 0x22BD),  # ⊺ ⊻ ⊼ ⊽
+    ('bin', 0x22C4, 0x22C7),  # ⋄ ⋅ ⋆ ⋇
+    ('bin', 0x22C9, 0x22CC),  # ⋉ ⋊ ⋋ ⋌
+    ('bin', 0x22CE, 0x22CF),  # ⋎ ⋏
+    ('bin', 0x22D2, 0x22D3),  # ⋒ ⋓
+    ('bin', 0x25B3, 0x25B3),  # △
+    ('bin', 0x25B7, 0x25B7),  # ▷
+    ('bin', 0x25BD, 0x25BD),  # ▽
+    ('bin', 0x25C1, 0x25C1),  # ◁
+    ('bin', 0x2A2F, 0x2A2F),  # ⨯
+    ('bin', 0x2A3F, 0x2A3F),  # ⨿
+    ('op', 0x220F, 0x2211),  # ∏ ∐ ∑
+    ('op', 0x222B, 0x2233),  # ∫ ∬ ∭ ∮ ...
+    ('op', 0x22C0, 0x22C3),  # ⋀ ⋁ ⋂ ⋃
+    ('op', 0x2A00, 0x2A06),  # ⨀ ⨁ ⨂ ...
+    ('op', 0x2A09, 0x2A09),  # ⨉
+    ('op', 0x2A0C, 0x2A1C),  # ⨌ ⨍ ...
+    ('open', 0x0028, 0x0028),  # (
+    ('open', 0x005B, 0x005B),  # [
+    ('open', 0x007B, 0x007B),  # {
+    ('open', 0x2308, 0x2308),  # ⌈
+    ('open', 0x230A, 0x230A),  # ⌊
+    ('open', 0x27E6, 0x27E6),  # ⟦
+    ('open', 0x27E8, 0x27E8),  # ⟨
+    ('open', 0x27EA, 0x27EA),  # ⟪
+    ('open', 0x2983, 0x2983),  # ⦃
+    ('open', 0xE000, 0xE000),  # literal { placeholder
+    ('close', 0x0021, 0x0021),  # !
+    ('close', 0x0029, 0x0029),  # )
+    ('close', 0x003F, 0x003F),  # ?
+    ('close', 0x005D, 0x005D),  # ]
+    ('close', 0x007D, 0x007D),  # }
+    ('close', 0x2309, 0x2309),  # ⌉
+    ('close', 0x230B, 0x230B),  # ⌋
+    ('close', 0x27E7, 0x27E7),  # ⟧
+    ('close', 0x27E9, 0x27E9),  # ⟩
+    ('close', 0x27EB, 0x27EB),  # ⟫
+    ('close', 0x2984, 0x2984),  # ⦄
+    ('close', 0xE001, 0xE001),  # literal } placeholder
+    ('punct', 0x002C, 0x002C),  # ,
+    ('punct', 0x003B, 0x003B),  # ;
+    ('space', 0x00A0, 0x00A0),  # no-break space (~)
+    ('space', 0x2000, 0x200A),  # en, em, thin, ... spaces
+    ('space', 0x202F, 0x202F),  # narrow no-break space
+    ('space', 0x205F, 0x205F),  # medium mathematical space
+    ('space', 0x3000, 0x3000),  # ideographic space
+    ('space', 0xE002, 0xE002),  # explicit "\ " placeholder
+    ('attach', 0x0027, 0x0027),  # '
+    ('attach', 0x2032, 0x2037),  # ′ ″ ‴ ...
+    ('attach', 0x2057, 0x2057),  # ⁗
 ]

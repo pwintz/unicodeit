@@ -8,7 +8,8 @@
     "test": "tests"
   },
   "files": [
-    "ts_dist/**/*"
+    "ts_dist/**/*",
+    "ts_src/**/*"
   ],
   "scripts": {
     "build": "tsc && webpack",
