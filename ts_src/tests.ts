@@ -183,6 +183,11 @@ describe('Symbols', () => {
       expect(display('A = \\begin{pmatrix}a\\\\b\\end{pmatrix}^{-1}_{ij} x')).to.equal('A = ⎛a⎞⁻¹ x\n    ⎝b⎠ᵢⱼ');
       done();
     });
+    it('keeps fractions in matrix cells over their bars', done => {
+      expect(display('\\begin{bmatrix} 1 & 2 \\\\ x & \\frac{d}{dx} x^2 \\end{bmatrix}'))
+        .to.equal('⎡1     2   ⎤\n⎢    d     ⎥\n⎢x  ──── x²⎥\n⎣    dx    ⎦');
+      done();
+    });
     it('keeps empty matrix rows', done => {
       expect(display('\\begin{bmatrix}\n1 & 2 & 3 & 5  \\\\ \\\\ \\\\\n\\end{bmatrix}'))
         .to.equal('⎡1  2  3  5⎤\n⎢          ⎥\n⎣          ⎦');

@@ -217,3 +217,12 @@ def test_empty_matrix_rows():
 ])
 def test_display_block_scripts(latex, expected):
     assert display(latex) == expected
+
+
+def test_display_matrix_cell_with_fraction():
+    # a cell over several rows moves as one block, keeping the fraction's parts over its bar
+    assert display('\\begin{bmatrix} 1 & 2 \\\\ x & \\frac{d}{dx} x^2 \\end{bmatrix}') == (
+        '⎡1     2   ⎤\n'
+        '⎢    d     ⎥\n'
+        '⎢x  ──── x²⎥\n'
+        '⎣    dx    ⎦')

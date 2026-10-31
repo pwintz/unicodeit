@@ -188,6 +188,13 @@ def _pad(text: str, width: int, align: str = 'center') -> str:
     return ' ' * left + text + ' ' * (extra - left)
 
 
+def _pad_block(rows, width: int, align: str = 'center'):
+    """Pad rows to a width as one block, all moved by the same amount, so a fraction's
+    parts stay over its bar."""
+    left = (width - max(_width(r) for r in rows)) // 2 if align == 'center' else 0
+    return [_pad(' ' * left + r, width, 'left') for r in rows]
+
+
 def _stack(blocks, align: str = 'center'):
     """Stack blocks (lists of rows) vertically, padded to the same width."""
     width = max(_width(r) for rows in blocks for r in rows)
@@ -354,7 +361,7 @@ class _Converter:
         align = 'left' if env == 'cases' else 'center'
         lines = []
         for r in cells:
-            padded = [([_pad(line, w, align) for line in rows], axis) for (rows, axis), w in zip(r, widths)]
+            padded = [(_pad_block(rows, w, align), axis) for (rows, axis), w in zip(r, widths)]
             joined = []
             for i, part in enumerate(padded):
                 joined += [part] if i == 0 else [(['  '], 0), part]

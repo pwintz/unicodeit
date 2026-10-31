@@ -219,6 +219,13 @@ function pad(text: string, w: number, align: 'center' | 'left' = 'center'): stri
 }
 
 // Stack blocks (lists of rows) vertically, padded to the same width.
+// Pad rows to a width as one block, all moved by the same amount, so a fraction's parts stay
+// over its bar.
+function padBlock(rows: string[], w: number, align: 'center' | 'left' = 'center'): string[] {
+    const left = align == 'center' ? Math.floor((w - Math.max(...rows.map(width))) / 2) : 0;
+    return rows.map((r) => pad(' '.repeat(left) + r, w, 'left'));
+}
+
 function stack(blocks: string[][], align: 'center' | 'left' = 'center'): string[] {
     const w = Math.max(...blocks.flat().map(width));
     return blocks.flat().map((r) => pad(r, w, align));
@@ -319,7 +326,7 @@ class Converter {
             const joined: Block[] = [];
             r.forEach(([rows, axis], j) => {
                 if (j > 0) joined.push([['  '], 0]);
-                joined.push([rows.map((line) => pad(line, widths[j], align)), axis]);
+                joined.push([padBlock(rows, widths[j], align), axis]);
             });
             lines = lines.concat(sideBySide(joined)[0]);
         }
