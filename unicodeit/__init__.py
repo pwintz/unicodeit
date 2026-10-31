@@ -3,4 +3,4 @@
 from .replace import replace
 
 __author__ = 'Sven Kreiss <me@svenkreiss.com>, Kyle Cranmer <kyle.cranmer@nyu.edu>'
-__version__ = '0.8.1'
+__version__ = '0.8.2'
